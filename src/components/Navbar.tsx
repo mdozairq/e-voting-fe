@@ -1,20 +1,26 @@
+"use client"
 import React from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
-import CustomButton from './CustomButton'
-// import { useAppSelector } from '@/redux/hooks'
-// import { getAppData } from '@/redux/selectors/app'
+import { useAppDispatch } from '@/redux/hooks'
+import { useRouter } from 'next/navigation'
+import { Roles } from '@/lib/types'
+import { setAppState } from '@/redux/slices/appStateReducer'
 
 const Navbar = () => {
-  // const {role} = useAppSelector(getAppData);
-  // console.log(role);
-  
+  const dispatch = useAppDispatch()
+  const router = useRouter();
+
+  const handleClick = () => {
+    // router.push(path);
+    // console.log(path, role);
+    dispatch({ type: setAppState, payload: { title: "current_role", value: Roles.GUEST } });
+  }
 
   return (
-    <header className='w-full absolute z-10'> 
+    <header className='w-full absolute z-10'>
       <nav className='max-w-[1440px] mx-auto flex justify-between items-center
       sm:px-16 px-6 py-4'>
-        <Link href='/' className='flex justify-center items-center no-underline'><h2 className='text-black-500 font-bold text-lg'>E-Voting System</h2></Link>
+        <Link href='/' className='flex justify-center items-center no-underline' onClick={handleClick}><h2 className='text-black-500 font-bold text-lg'>E-Voting System</h2></Link>
       </nav>
     </header>
   )

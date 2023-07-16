@@ -7,11 +7,11 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
 interface AppStateType {
-  role: Roles
+  current_role: Roles
 }
 
 const initialState: AppStateType = {
-  role: Roles.GUEST,
+  current_role: Roles.GUEST,
 };
 
 export const appSlice = createSlice({
@@ -22,7 +22,6 @@ export const appSlice = createSlice({
       const {
         payload: { title, value },
       } = action;
-      console.log(state, action, state.role);
 
       state[title] = value;
     },

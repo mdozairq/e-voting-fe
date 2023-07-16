@@ -4,7 +4,7 @@ import { Roles } from "@/lib/types"
 
 
 const Hero = () => {
-
+    
 
     return (
         <div className="hero">

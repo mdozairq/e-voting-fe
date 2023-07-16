@@ -12,7 +12,7 @@ const RouterButton = ({ title, containerStyle, btnType, path, role }: RouterButt
     const handleClick = () => {
         router.push(path);
         console.log(path, role);
-        dispatch({ type: setAppState, payload: { title: "role", value: role } });
+        dispatch({ type: setAppState, payload: { title: "current_role", value: role } });
     }
 
     return (
