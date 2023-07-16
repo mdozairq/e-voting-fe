@@ -1,7 +1,3 @@
-/* eslint-disable unused-imports/no-unused-vars */
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable eqeqeq */
-/* eslint-disable no-param-reassign */
 import { Roles } from '@/lib/types';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
