@@ -1,11 +1,11 @@
-import Image from 'next/image'
-import { Hero, LocationBox } from '@/components'
-import ResolvePage from '@/lib/resolver'
+import { Hero } from '@/components'
 
-export default function Home() {
+function Home() {
   return (
     <main className="overflow-hidden">
-      <ResolvePage/>
+      <Hero />
     </main>
   )
 }
+
+export default Home

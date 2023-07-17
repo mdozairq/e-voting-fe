@@ -1,13 +1,13 @@
-import { useAppSelector } from '@/redux/hooks'
-import { getAppData } from '@/redux/selectors/app'
 import React from 'react'
 
 const Admin = () => {
-    // const { role } = useAppSelector(getAppData)
-    // console.log(role);
 
     return (
-        <div>Admin</div>
+        <div className='hero'>
+            <div className="flex-1 pt-24 padding-x">
+                ADMIN
+            </div>
+        </div>
     )
 }
 

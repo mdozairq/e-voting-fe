@@ -4,7 +4,7 @@ import { Roles } from "@/lib/types"
 
 
 const Hero = () => {
-    
+
 
     return (
         <div className="hero">
@@ -15,19 +15,19 @@ const Hero = () => {
                     <RouterButton
                         title="VOTERS"
                         containerStyle="bg-primary-blue text-white rounded-full mt-5 cursor-pointer"
-                        path="/voter"
+                        path="/auth/voter"
                         role={Roles.VOTER}
                     />
                     <RouterButton
                         title="CANDIDATES"
                         containerStyle="bg-secondary-orange text-white rounded-full mt-5 cursor-pointer"
-                        path="/candidate"
+                        path="/auth/candidate"
                         role={Roles.CANDIDATE}
                     />
                     <RouterButton
                         title="ADMIN"
                         containerStyle="bg-indigo-500 text-white rounded-full mt-5 cursor-pointer"
-                        path="/admin"
+                        path="/auth/admin"
                         role={Roles.ADMIN}
                     />
                 </div>

@@ -20,8 +20,8 @@ const makeConfiguredStore = () =>
   });
 
 const persistConfig = {
-  key: 'nextjs',
-  whitelist: [],
+  key: 'root',
+  whitelist: ['appState'],
   storage,
 };
 
