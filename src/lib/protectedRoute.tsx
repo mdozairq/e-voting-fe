@@ -1,34 +1,36 @@
-import React from "react";
-import { useAppSelector } from "@/redux/hooks";
-import { getAppData } from "@/redux/selectors/app";
+"use client"
 import { useRouter } from "next/navigation";
+import { authenticateAdmin, authenticateVoter, authenticateCandidate } from "@/lib/auth";
 import { Roles } from "./types";
 
-function ProtectedRoute<T>(Component: React.ComponentType<T>) {
-  const { current_role } = useAppSelector(getAppData);
+type ProtectedRouteProps = {
+  role: Roles;
+  children: React.ReactNode;
+};
+
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ role, children }) => {
   const router = useRouter();
 
-  const WrappedComponent: React.ComponentType<any> = (props: any) => {
-    switch (current_role) {
+  const isAuthenticated = () => {
+    switch (role) {
       case Roles.ADMIN:
-        router.replace("/admin");
-        break;
+        return authenticateAdmin();
       case Roles.VOTER:
-        router.replace("/voter");
-        break;
+        return authenticateVoter();
       case Roles.CANDIDATE:
-        router.replace("/candidate");
-        break;
+        return authenticateCandidate();
       default:
-        break;
+        return false;
     }
-
-    return <Component {...props} />;
   };
 
-  WrappedComponent.displayName = `ProtectedRoute(${Component.displayName || Component.name || "Component"})`;
+  if (!isAuthenticated()) {
+    // Redirect to login or unauthorized page
+    router.replace("/");
+    return null;
+  }
 
-  return WrappedComponent;
-}
+  return <>{children}</>;
+};
 
 export default ProtectedRoute;
