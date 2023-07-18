@@ -1,4 +1,7 @@
 "use client"
+import { Roles } from '@/lib/types';
+import { useAppDispatch } from '@/redux/hooks';
+import { setAppState } from '@/redux/slices/appStateReducer';
 import { useRouter } from 'next/navigation';
 import React, { useRef, useState } from 'react'
 
@@ -7,6 +10,7 @@ const VoterAuth = () => {
     const [isAadhaarVerified, setIsAadhaarVerified] = useState(false);
     const [otp, setOtp] = useState(['', '', '', '']);
     const inputRefs = useRef<HTMLInputElement[]>([]);
+    const dispatch = useAppDispatch()
     const router = useRouter()
 
     const handleInputChange = (index: number, value: string) => {
@@ -54,6 +58,7 @@ const VoterAuth = () => {
         const enteredOtp = otp.join('');
         // Perform OTP verification logic here
         console.log('Verifying OTP:', enteredOtp);
+        dispatch({ type: setAppState, payload: { title: "current_role", value: Roles.VOTER } });
         router.push("/voter")
     };
 

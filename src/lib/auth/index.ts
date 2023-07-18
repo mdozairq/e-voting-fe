@@ -1,21 +1,19 @@
+import { Roles } from "../types";
 
 
-  
-  export const authenticateAdmin = (): boolean => {
-    // Implement your authentication logic for admin role
-    // Return true if authenticated, false otherwise
-    return true;
-  };
-  
-  export const authenticateVoter = (): boolean => {
-    // Implement your authentication logic for voter role
-    // Return true if authenticated, false otherwise
-    return true;
-  };
-  
-  export const authenticateCandidate = (): boolean => {
-    // Implement your authentication logic for candidate role
-    // Return true if authenticated, false otherwise
-    return true;
-  };
-  
+
+export const authenticateAdmin = (current_role: Roles): boolean => {
+  return current_role === Roles.ADMIN
+};
+
+export const authenticateVoter = (current_role: Roles): boolean => {
+  return current_role === Roles.VOTER
+};
+
+export const authenticateCandidate = (current_role: Roles): boolean => {
+  return current_role === Roles.CANDIDATE
+};
+
+export const authenticateGuest = (current_role: Roles): boolean => {
+  return current_role === Roles.GUEST
+};

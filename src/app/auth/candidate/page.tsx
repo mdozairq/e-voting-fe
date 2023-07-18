@@ -1,4 +1,7 @@
 "use client"
+import { Roles } from '@/lib/types';
+import { useAppDispatch } from '@/redux/hooks';
+import { setAppState } from '@/redux/slices/appStateReducer';
 import { useRouter } from 'next/navigation';
 import React, { useState, useRef } from 'react';
 
@@ -18,6 +21,7 @@ const CandidateAuth: React.FC = () => {
     const [otp, setOtp] = useState(['', '', '', '']);
     const inputRefs = useRef<HTMLInputElement[]>([]);
     const router = useRouter()
+    const dispatch = useAppDispatch()
     
     const handleFormSwitch = (type: FormType) => {
         setFormType(type);
@@ -70,6 +74,7 @@ const CandidateAuth: React.FC = () => {
         } else if (formType === FormType.Login) {
             // Perform login logic here
             console.log('Login form submitted');
+            dispatch({ type: setAppState, payload: { title: "current_role", value: Roles.CANDIDATE } });
             router.push('/candidate');
         } else if (formType === FormType.ForgotPassword) {
             // Perform forgot password logic here

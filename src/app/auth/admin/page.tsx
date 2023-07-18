@@ -1,4 +1,7 @@
 "use client"
+import { Roles } from '@/lib/types';
+import { useAppDispatch } from '@/redux/hooks';
+import { setAppState } from '@/redux/slices/appStateReducer';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
@@ -7,6 +10,7 @@ const AdminAuth: React.FC = () => {
   const [password, setPassword] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
   const router = useRouter()
+  const dispatch = useAppDispatch()
 
   const validateEmail = (email: string) => {
     // Use a regular expression to validate the email format
@@ -24,6 +28,7 @@ const AdminAuth: React.FC = () => {
     if (isValid) {
       // Perform login logic here
       console.log('Login form submitted');
+      dispatch({ type: setAppState, payload: { title: "current_role", value: Roles.ADMIN} });
       router.push('/admin');
     }
   };
@@ -40,9 +45,8 @@ const AdminAuth: React.FC = () => {
             <input
               type="email"
               id="email"
-              className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                !isEmailValid ? 'border-red-500' : ''
-              }`}
+              className={`appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${!isEmailValid ? 'border-red-500' : ''
+                }`}
               placeholder="Enter email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}

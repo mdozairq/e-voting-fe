@@ -2,17 +2,13 @@
 import React from 'react'
 import Link from 'next/link'
 import { useAppDispatch } from '@/redux/hooks'
-import { useRouter } from 'next/navigation'
 import { Roles } from '@/lib/types'
 import { setAppState } from '@/redux/slices/appStateReducer'
 
 const Navbar = () => {
   const dispatch = useAppDispatch()
-  const router = useRouter();
 
   const handleClick = () => {
-    // router.push(path);
-    // console.log(path, role);
     dispatch({ type: setAppState, payload: { title: "current_role", value: Roles.GUEST } });
   }
 
