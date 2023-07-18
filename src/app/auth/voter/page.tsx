@@ -1,4 +1,5 @@
 "use client"
+import ProtectedRoute from '@/lib/protectedRoute';
 import { Roles } from '@/lib/types';
 import { useAppDispatch } from '@/redux/hooks';
 import { setAppState } from '@/redux/slices/appStateReducer';
@@ -64,63 +65,65 @@ const VoterAuth = () => {
 
 
     return (
-        <div className="hero">
-            <div className="flex-1 padding-x">
-                <div className="flex justify-center items-center h-screen">
-                    <div className="bg-white shadow-md rounded px-8 py-6 w-96">
-                        <h2 className="text-2xl font-bold mb-6">{isAadhaarVerified ? 'Verify OTP' : 'Enter Aadhaar Number'}</h2>
-                        {isAadhaarVerified ? (
-                            <form onSubmit={handleOtpSubmit}>
-                                <div className="mb-4">
-                                    {/* <label htmlFor="otp" className="block text-gray-700 text-sm font-bold mb-2">
+        <ProtectedRoute role={Roles.GUEST}>
+            <div className="hero">
+                <div className="flex-1 padding-x">
+                    <div className="flex justify-center items-center h-screen">
+                        <div className="bg-white shadow-md rounded px-8 py-6 w-96">
+                            <h2 className="text-2xl font-bold mb-6">{isAadhaarVerified ? 'Verify OTP' : 'Enter Aadhaar Number'}</h2>
+                            {isAadhaarVerified ? (
+                                <form onSubmit={handleOtpSubmit}>
+                                    <div className="mb-4">
+                                        {/* <label htmlFor="otp" className="block text-gray-700 text-sm font-bold mb-2">
                                         Enter OTP
                                     </label> */}
-                                    <div className="flex justify-center space-x-4 mb-4">
-                                        {otp.map((digit, index) => (
-                                            <input
-                                                key={index}
-                                                type="text"
-                                                className="w-12 h-12 text-center appearance-none border rounded focus:outline-none focus:shadow-outline"
-                                                maxLength={1}
-                                                value={digit}
-                                                onChange={(e) => handleInputChange(index, e.target.value)}
-                                                ref={(el) => (inputRefs.current[index] = el!)}
-                                            />
-                                        ))}
+                                        <div className="flex justify-center space-x-4 mb-4">
+                                            {otp.map((digit, index) => (
+                                                <input
+                                                    key={index}
+                                                    type="text"
+                                                    className="w-12 h-12 text-center appearance-none border rounded focus:outline-none focus:shadow-outline"
+                                                    maxLength={1}
+                                                    value={digit}
+                                                    onChange={(e) => handleInputChange(index, e.target.value)}
+                                                    ref={(el) => (inputRefs.current[index] = el!)}
+                                                />
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
-                                <button
-                                    type="submit"
-                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
-                                >
-                                    Verify
-                                </button>
-                            </form>
-                        ) : (
-                            <form onSubmit={handleAdhaarSubmit}>
-                                <div className="mb-4">
-                                    <input
-                                        type="text"
-                                        id="aadhaarNumber"
-                                        className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        placeholder="Enter 12-digit Aadhaar number"
-                                        maxLength={14}
-                                        value={aadhaarNumber}
-                                        onChange={(e) => formatAadhaarNumber(e.target.value)}
-                                    />
-                                </div>
-                                <button
-                                    type="submit"
-                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
-                                >
-                                    Get OTP
-                                </button>
-                            </form>
-                        )}
+                                    <button
+                                        type="submit"
+                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+                                    >
+                                        Verify
+                                    </button>
+                                </form>
+                            ) : (
+                                <form onSubmit={handleAdhaarSubmit}>
+                                    <div className="mb-4">
+                                        <input
+                                            type="text"
+                                            id="aadhaarNumber"
+                                            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            placeholder="Enter 12-digit Aadhaar number"
+                                            maxLength={14}
+                                            value={aadhaarNumber}
+                                            onChange={(e) => formatAadhaarNumber(e.target.value)}
+                                        />
+                                    </div>
+                                    <button
+                                        type="submit"
+                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+                                    >
+                                        Get OTP
+                                    </button>
+                                </form>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </ProtectedRoute>
     )
 }
 

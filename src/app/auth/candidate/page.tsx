@@ -1,4 +1,5 @@
 "use client"
+import ProtectedRoute from '@/lib/protectedRoute';
 import { Roles } from '@/lib/types';
 import { useAppDispatch } from '@/redux/hooks';
 import { setAppState } from '@/redux/slices/appStateReducer';
@@ -85,6 +86,7 @@ const CandidateAuth: React.FC = () => {
     };
 
     return (
+        <ProtectedRoute role={Roles.GUEST}>
         <div className="flex justify-center items-center h-screen">
             <div className="bg-white shadow-md rounded px-8 py-6 w-96">
                 <h2 className="text-2xl font-bold mb-6 text-center">
@@ -278,6 +280,7 @@ const CandidateAuth: React.FC = () => {
                 )}
             </div>
         </div>
+        </ProtectedRoute>
     );
 };
 
