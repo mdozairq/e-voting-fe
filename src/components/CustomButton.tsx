@@ -1,5 +1,4 @@
 import { CustomButtonProps } from "@/lib/types"
-import Image from "next/image"
 
 const CustomButton = ({title, containerStyle, handleClick, btnType}: CustomButtonProps) => {
   return (

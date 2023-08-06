@@ -1,17 +1,18 @@
 "use client"
+import { adminLogIn } from '@/action/auth';
 import ProtectedRoute from '@/lib/protectedRoute';
-import { Roles } from '@/lib/types';
-import { useAppDispatch } from '@/redux/hooks';
+import { AdminLogIn, Roles } from '@/lib/types';
 import { setAppState } from '@/redux/slices/appStateReducer';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 const AdminAuth: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
   const router = useRouter()
-  const dispatch = useAppDispatch()
+  const dispatch = useDispatch()
 
   const validateEmail = (email: string) => {
     // Use a regular expression to validate the email format
@@ -27,10 +28,12 @@ const AdminAuth: React.FC = () => {
     setIsEmailValid(isValid);
 
     if (isValid) {
-      // Perform login logic here
+      const adminPayload: AdminLogIn = {
+        email: email,
+        password: password
+      }
       console.log('Login form submitted');
-      dispatch({ type: setAppState, payload: { title: "current_role", value: Roles.ADMIN } });
-      router.push('/admin');
+      dispatch(adminLogIn(adminPayload));
     }
   };
 

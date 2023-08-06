@@ -12,8 +12,8 @@ type ProtectedRouteProps = {
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ role, children }) => {
   const router = useRouter();
-  const { current_role } = useAppSelector(getAppData);
-  console.log(current_role, role);
+  const { current_role, global_loader, global_error } = useAppSelector(getAppData);
+  console.log(current_role, role,  global_loader, global_error);
 
 
   const isAuthenticated = () => {

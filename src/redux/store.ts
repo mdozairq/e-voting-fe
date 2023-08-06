@@ -7,9 +7,11 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import { appSlice } from './slices/appStateReducer';
+import { authSlice } from './slices/authReducter';
 
 const rootReducer = combineReducers({
   [appSlice.name]: appSlice.reducer,
+  [authSlice.name]: authSlice.reducer
 });
 
 const makeConfiguredStore = () =>

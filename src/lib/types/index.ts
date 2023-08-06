@@ -28,3 +28,20 @@ export interface HeroProps {
     handleCandidateClick?: MouseEventHandler<HTMLButtonElement>;
     handleAdminClick?: MouseEventHandler<HTMLButtonElement>;
 }
+
+export interface CandidateSignUp {
+    username: string,
+    uid: string,
+    email: string,
+    password: string
+}
+
+export interface CandidateSignIn {
+    username: string,
+    password: string
+}
+
+export interface AdminLogIn {
+    email: string,
+    password: string
+}

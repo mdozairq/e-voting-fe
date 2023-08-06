@@ -1,18 +1,24 @@
 "use client"
+import { getVoterOtp, verifyVoterOtp } from '@/action/auth';
 import ProtectedRoute from '@/lib/protectedRoute';
 import { Roles } from '@/lib/types';
-import { useAppDispatch } from '@/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { getAuthData } from '@/redux/selectors/app';
 import { setAppState } from '@/redux/slices/appStateReducer';
 import { useRouter } from 'next/navigation';
 import React, { useRef, useState } from 'react'
+import { useDispatch } from 'react-redux';
 
 const VoterAuth = () => {
+    const { is_otp_sent } = useAppSelector(getAuthData);
     const [aadhaarNumber, setAadhaarNumber] = useState('');
-    const [isAadhaarVerified, setIsAadhaarVerified] = useState(false);
+    const [isOtpSent, setIsOtpSent] = useState(false);
     const [otp, setOtp] = useState(['', '', '', '']);
     const inputRefs = useRef<HTMLInputElement[]>([]);
-    const dispatch = useAppDispatch()
+    const appDispatch = useAppDispatch()
+    const dispatch = useDispatch()
     const router = useRouter()
+    console.log("is_otp_sent:", is_otp_sent);
 
     const handleInputChange = (index: number, value: string) => {
         const newOtp = [...otp];
@@ -50,17 +56,21 @@ const VoterAuth = () => {
         console.log('Generating OTP for Aadhaar Number:', submitAdhaar);
         console.log(submitAdhaar.length);
 
-        if (submitAdhaar.length === 12)
-            setIsAadhaarVerified(true)
+        if (submitAdhaar.length === 12) {
+            dispatch(getVoterOtp({ uid: submitAdhaar }))
+        }
+        // setIsOtpSent(true)
     };
 
     const handleOtpSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const enteredOtp = otp.join('');
+        const submitAdhaar = aadhaarNumber.replace(/-/g, "")
         // Perform OTP verification logic here
-        console.log('Verifying OTP:', enteredOtp);
-        dispatch({ type: setAppState, payload: { title: "current_role", value: Roles.VOTER } });
-        router.push("/voter")
+        if (enteredOtp.length === 4) {
+            console.log('Verifying OTP:', enteredOtp, { uid: submitAdhaar, OTP: enteredOtp });
+            dispatch(verifyVoterOtp({ uid: submitAdhaar, OTP: enteredOtp }));
+        }
     };
 
 
@@ -70,8 +80,8 @@ const VoterAuth = () => {
                 <div className="flex-1 padding-x">
                     <div className="flex justify-center items-center h-screen">
                         <div className="bg-white shadow-md rounded px-8 py-6 w-96">
-                            <h2 className="text-2xl font-bold mb-6">{isAadhaarVerified ? 'Verify OTP' : 'Enter Aadhaar Number'}</h2>
-                            {isAadhaarVerified ? (
+                            <h2 className="text-2xl font-bold mb-6">{isOtpSent ? 'Verify OTP' : 'Enter Aadhaar Number'}</h2>
+                            {is_otp_sent ? (
                                 <form onSubmit={handleOtpSubmit}>
                                     <div className="mb-4">
                                         {/* <label htmlFor="otp" className="block text-gray-700 text-sm font-bold mb-2">
