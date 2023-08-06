@@ -13,6 +13,7 @@ const Navbar = () => {
   const { current_role } = useAppSelector(getAppData)
 
   const handleClick = () => {
+    localStorage.removeItem('evoting-auth')
     dispatch({ type: setAppState, payload: { title: "current_role", value: Roles.GUEST } });
   }
 
