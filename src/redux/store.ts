@@ -8,10 +8,12 @@ import storage from 'redux-persist/lib/storage';
 
 import { appSlice } from './slices/appStateReducer';
 import { authSlice } from './slices/authReducter';
+import { electionSlice } from './slices/electionStateReducer';
 
 const rootReducer = combineReducers({
   [appSlice.name]: appSlice.reducer,
-  [authSlice.name]: authSlice.reducer
+  [authSlice.name]: authSlice.reducer,
+  [electionSlice.name]: electionSlice.reducer
 });
 
 const makeConfiguredStore = () =>

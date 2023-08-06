@@ -6,14 +6,14 @@ import jwtDecode from 'jwt-decode';
 
 const api = axios.create({ baseURL: 'http://localhost:8080/e-voting' })
 
-api.interceptors.request.use((req: any) => {
-  if (localStorage.getItem('role')) {
-    const role = JSON.parse(localStorage.getItem('role') as string).info
+api.interceptors.request.use((config: any) => {
+  if (localStorage.getItem('evoting-auth')) {
+    const role = JSON.parse(localStorage.getItem('evoting-auth') as string)
     console.log(role);
 
-    req.headers.Authorization = `${role.token}`;
+    config.headers.Authorization = role;
   }
-  return req;
+  return config;
 });
 
 let requestCount = 0; // Track the number of active requests
@@ -56,3 +56,4 @@ export const verifyOtp = (payload: { OTP: string, uid: string }) => api.post('/v
 export const candiateSignIn = (payload: CandidateSignIn) => api.post('candidate/signin', payload);
 export const candiateSignUp = (payload: CandidateSignUp) => api.post('candidate/signup', payload);
 export const adminLogIn = (payload: AdminLogIn) => api.post('admin/signin', payload);
+export const getAllElection = () => api.get('/admin/election/all')
