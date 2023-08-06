@@ -33,6 +33,7 @@ api.interceptors.response.use(
     if (requestCount === 0) {
       // Hide loader when all requests are completed
       store.dispatch({ type: setAppState, payload: { title: "global_loader", value: false } });
+      store.dispatch({ type: setAppState, payload: { title: "global_error", value: "" } });
     }
     return response;
   },
@@ -44,7 +45,7 @@ api.interceptors.response.use(
     }
 
     // Display the global error message
-    store.dispatch({ type: setAppState, payload: { title: "global_error", value: error.message || "An error occurred"} });
+    store.dispatch({ type: setAppState, payload: { title: "global_error", value: error.message || "An error occurred" } });
 
     return Promise.reject(error);
   }

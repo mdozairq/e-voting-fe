@@ -4,12 +4,18 @@ import { createSlice } from '@reduxjs/toolkit';
 
 interface authStateType {
     current_role: Roles,
-    is_otp_sent: boolean
+    is_otp_sent: boolean,
+    voter_data: any,
+    candidate_data: any
+    admin_data: any
 }
 
 const initialState: authStateType = {
     current_role: Roles.GUEST,
-    is_otp_sent: false
+    is_otp_sent: false,
+    voter_data: null,
+    candidate_data: null,
+    admin_data: null
 };
 
 export const authSlice = createSlice({
