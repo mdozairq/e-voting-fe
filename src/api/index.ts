@@ -57,3 +57,4 @@ export const candiateSignIn = (payload: CandidateSignIn) => api.post('candidate/
 export const candiateSignUp = (payload: CandidateSignUp) => api.post('candidate/signup', payload);
 export const adminLogIn = (payload: AdminLogIn) => api.post('admin/signin', payload);
 export const getAllElection = () => api.get('/admin/election/all')
+export const getElectionById = (id: string) => api.get(`/admin/election/${id}`)

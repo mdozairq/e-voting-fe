@@ -14,3 +14,13 @@ export const getAllElection = (): any => async (dispatch: any) => {
         console.log(error);
     }
 };
+
+export const getElectionById = (id: string): any => async (dispatch: any) => {
+    try {
+        const { data } = await api.getElectionById(id);
+        console.log(data)
+        dispatch({ type: setElectionState, payload: { title: "current_election", value: data } })
+    } catch (error: any) {
+        console.log(error);
+    }
+};

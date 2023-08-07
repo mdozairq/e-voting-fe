@@ -45,3 +45,10 @@ export interface AdminLogIn {
     email: string,
     password: string
 }
+
+export enum ElectionPhase {
+    INITIALIZATION = 'INITIALIZATION',
+    REGISTRATION = 'REGISTRATION',
+    VOTING = 'VOTING',
+    RESULT = 'RESULT'
+}
