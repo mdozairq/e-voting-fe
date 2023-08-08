@@ -34,7 +34,7 @@ const PartyCard: React.FC = () => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 cursor-pointer">
         {party_list && party_list.map((party: PartyData) => (
-            <div className="bg-white p-4 rounded shadow-md m-4 cursor-pointer">
+            <div key={party._id} className="bg-white p-4 rounded shadow-md m-4 cursor-pointer">
                 <div className="flex items-center mb-4">
                     <img src={party.party_logo_url} alt={party.party_name} className="w-20 h-20 rounded mr-4" />
                     <div>
@@ -51,7 +51,7 @@ const PartyCard: React.FC = () => {
                     </div>
                     <div>
                         <p className="font-semibold">Party Slogan:</p>
-                        <p>"{party.party_slogan}"</p>
+                        <p>{`"${party.party_slogan}"`}</p>
                     </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4 mb-4">
