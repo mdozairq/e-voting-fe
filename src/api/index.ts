@@ -1,4 +1,4 @@
-import { AdminLogIn, CandidateSignIn, CandidateSignUp } from '@/lib/types';
+import { AdminLogIn, CandidateSignIn, CandidateSignUp, InitializeElectionDTO } from '@/lib/types';
 import { setAppState } from '@/redux/slices/appStateReducer';
 import { store } from '@/redux/store';
 import axios from 'axios';
@@ -56,5 +56,6 @@ export const verifyOtp = (payload: { OTP: string, uid: string }) => api.post('/v
 export const candiateSignIn = (payload: CandidateSignIn) => api.post('candidate/signin', payload);
 export const candiateSignUp = (payload: CandidateSignUp) => api.post('candidate/signup', payload);
 export const adminLogIn = (payload: AdminLogIn) => api.post('admin/signin', payload);
-export const getAllElection = () => api.get('/admin/election/all')
-export const getElectionById = (id: string) => api.get(`/admin/election/${id}`)
+export const getAllElection = () => api.get('/admin/election/all');
+export const getElectionById = (id: string) => api.get(`/admin/election/${id}`);
+export const initializeElection = (payload: InitializeElectionDTO) => api.post(`admin/election/initialize`, payload)

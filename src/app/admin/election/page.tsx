@@ -11,9 +11,14 @@ const Admin = () => {
     return (
         <ProtectedRoute role={Roles.ADMIN}>
             <div className='hero h-screen'>
-                <ElectionDetail/>
+            <div className="flex-1 pt-24 px-2 md:px-8">
+                <div className="flex justify-start items h-full bg-gray-200 flex-col overflow-y-scroll">
+                    <PhaseProgress/>
+                    <ElectionDetail />
+                </div>
+                </div>
             </div>
-        </ProtectedRoute>
+        </ProtectedRoute >
     )
 }
 

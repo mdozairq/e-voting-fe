@@ -7,13 +7,11 @@ import { getElectionData } from '@/redux/selectors/app';
 import { phase_mapping } from '@/lib/helpers';
 
 
-interface ProgressBarProps {
-  currentStep: number;
-}
 
-const PhaseProgress: React.FC<ProgressBarProps> = ({currentStep}) => {
- 
 
+const PhaseProgress: React.FC = () => {
+  const { current_election } = useAppSelector(getElectionData);
+  const currentStep = (current_election && current_election.election_phase && phase_mapping(current_election.election_phase)) || 0;
   const steps = ['INITIALIZATION', 'REGISTRATION', 'VOTING', 'RESULT'];
 
   return (

@@ -52,3 +52,21 @@ export enum ElectionPhase {
     VOTING = 'VOTING',
     RESULT = 'RESULT'
 }
+
+export enum ElectionType {
+    GENERAL = 'GENERAL',
+    STATE = 'STATE',
+    MUNICIPAL = 'MUNICIPAL',
+    PANCHAYAT = 'PANCHAYAT'
+}
+export interface InitializeElectionDTO {
+    election_name: string,
+    description: string,
+    election_type: ElectionType | '',
+    constituency: string,
+    start_date: Date | '',
+    end_date: Date | '',
+    election_year: string,
+    is_active: boolean,
+    is_bypoll: boolean
+}
