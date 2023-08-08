@@ -3,10 +3,12 @@ import React from 'react'
 import Link from 'next/link'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { Roles } from '@/lib/types'
-import { setAppState } from '@/redux/slices/appStateReducer'
+import { resetAppState, setAppState } from '@/redux/slices/appStateReducer'
 import RouterButton from './RouterButton'
 import { getAppData } from '@/redux/selectors/app'
 import CustomButton from './CustomButton'
+import { resetAuthState } from '@/redux/slices/authReducter'
+import { resetElectionState } from '@/redux/slices/electionStateReducer'
 
 const Navbar = () => {
   const dispatch = useAppDispatch()
@@ -14,7 +16,10 @@ const Navbar = () => {
 
   const handleClick = () => {
     localStorage.removeItem('evoting-auth')
-    dispatch({ type: setAppState, payload: { title: "current_role", value: Roles.GUEST } });
+    // dispatch({ type: setAppState, payload: { title: "current_role", value: Roles.GUEST } });
+    dispatch(resetAppState())
+    dispatch(resetAuthState())
+    dispatch(resetElectionState())
   }
 
   return (

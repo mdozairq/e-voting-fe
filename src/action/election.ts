@@ -35,3 +35,23 @@ export const initializeElection = (formData: InitializeElectionDTO): any => asyn
         console.log(error);
     }
 };
+
+export const getRegistrationElection = (): any => async (dispatch: any) => {
+    try {
+        const { data } = await api.registrationElection()
+        console.log(data)
+        dispatch({ type: setElectionState, payload: { title: "all_election", value: data } })
+    } catch (error: any) {
+        console.log(error);
+    }
+};
+
+export const getPartyList = (): any => async (dispatch: any) => {
+    try {
+        const { data } = await api.getPartyList()
+        console.log(data)
+        dispatch({ type: setElectionState, payload: { title: "party_list", value: data } })
+    } catch (error: any) {
+        console.log(error);
+    }
+};

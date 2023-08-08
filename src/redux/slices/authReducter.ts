@@ -36,12 +36,16 @@ export const authSlice = createSlice({
             console.log(data);
             
             state.is_otp_sent = data;
-        }
+        },
+        resetAuthState: (state: authStateType) => {
+            return initialState; // Reset to initial state
+          },
     },
 });
 
 export const {
     setAuthState,
+    resetAuthState,
 } = authSlice.actions;
 
 export default authSlice.reducer;

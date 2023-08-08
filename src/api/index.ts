@@ -59,3 +59,5 @@ export const adminLogIn = (payload: AdminLogIn) => api.post('admin/signin', payl
 export const getAllElection = () => api.get('/admin/election/all');
 export const getElectionById = (id: string) => api.get(`/admin/election/${id}`);
 export const initializeElection = (payload: InitializeElectionDTO) => api.post(`admin/election/initialize`, payload)
+export const registrationElection = () => api.get('/candidate/election')
+export const getPartyList = () => api.get('/candidate/party/all')

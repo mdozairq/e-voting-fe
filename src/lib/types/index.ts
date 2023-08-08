@@ -70,3 +70,15 @@ export interface InitializeElectionDTO {
     is_active: boolean,
     is_bypoll: boolean
 }
+
+export interface PartyData {
+    _id: string;
+    party_name: string;
+    party_type: string;
+    party_slogan: string;
+    party_logo_url: string;
+    is_ruling: boolean;
+    is_disqualified: boolean;
+    created_at: string;
+    updated_at: string;
+  }

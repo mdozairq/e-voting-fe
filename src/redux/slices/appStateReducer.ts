@@ -26,11 +26,15 @@ export const appSlice = createSlice({
 
       state[title] = value;
     },
+    resetAppState: (state: AppStateType) => {
+      return initialState; // Reset to initial state
+    },
   },
 });
 
 export const {
   setAppState,
+  resetAppState,
 } = appSlice.actions;
 
 export default appSlice.reducer;

@@ -9,7 +9,8 @@ interface authStateType {
     candidate_data: any,
     admin_data: any,
     all_election: any,
-    current_election: any
+    current_election: any,
+    party_list: any,
 }
 
 const initialState: authStateType = {
@@ -19,7 +20,8 @@ const initialState: authStateType = {
     candidate_data: null,
     admin_data: null,
     all_election: null,
-    current_election: null
+    current_election: null,
+    party_list: null
 };
 
 export const electionSlice = createSlice({
@@ -33,11 +35,15 @@ export const electionSlice = createSlice({
 
             state[title] = value;
         },
+        resetElectionState: (state: any) => {
+            return initialState; // Reset to initial state
+        },
     },
 });
 
 export const {
     setElectionState,
+    resetElectionState,
 } = electionSlice.actions;
 
 export default electionSlice.reducer;
