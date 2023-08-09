@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 
 const ElectionList: React.FC = () => {
     const { all_election } = useAppSelector(getElectionData);
+    const [selectedElection, setSelectedElection] = useState<string|null|undefined>(null)
     const { current_role } = useAppSelector(getAppData)
     const [currentPage, setCurrentPage] = useState<number>(1);
     const dispatch = useDispatch();
@@ -28,19 +29,21 @@ const ElectionList: React.FC = () => {
 
     const handleAddElection = (id: string | null | undefined) => {
         console.log(id);
-        if (id) {
-            dispatch(getElectionById(id));
-        }
-        else {
-            dispatch({ type: setElectionState, payload: { title: "current_election", value: null } })
-        }
-        if (current_role === Roles.ADMIN)
+        if (current_role === Roles.ADMIN) {
+            if (id) {
+                dispatch(getElectionById(id));
+            }
+            else {
+                dispatch({ type: setElectionState, payload: { title: "current_election", value: null } })
+            }
             router.push("/admin/election")
-        else if (current_role === Roles.CANDIDATE) {
-
-            router.push("/candidate/register")
         }
-
+        else if (current_role === Roles.CANDIDATE && id) {
+            setSelectedElection(id)
+            dispatch(getElectionById(id));
+            // dispatch({ type: setElectionState, payload: { title: "current_election", value: id } })
+            // router.push("/candidate")
+        }
     };
 
     useEffect(() => {
@@ -59,7 +62,7 @@ const ElectionList: React.FC = () => {
                     {currentElections && currentElections.map((election: any) => (
                         <div
                             key={election._id}
-                            className="flex bg-white p-5 rounded shadow-md m-5 cursor-pointer items-center flex-col justify-center h-56 w-auto"
+                            className={`flex bg-white p-5 rounded shadow-md m-5 cursor-pointer items-center flex-col justify-center h-56 w-auto ${selectedElection === election._id ? 'border-blue-500 border-2' : ''}`}
                             onClick={() => handleAddElection(election._id)}
                         >
                             <h3 className="text-xl font-semibold mb-2">{election.election_name}</h3>

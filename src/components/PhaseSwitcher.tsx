@@ -21,7 +21,7 @@ const PhaseSwitcher: React.FC = () => {
 
         if (currentPhase === Phase.Result) {
             setDisabledPhase(true)
-            // s etCurrentPhase(Phase.Initialization)
+            // setCurrentPhase(Phase.Initialization)
         }
         else {
             setCurrentPhase((prevPhase) => prevPhase + 1);

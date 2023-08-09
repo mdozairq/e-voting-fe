@@ -27,6 +27,7 @@ export const verifyVoterOtp = (formData: { uid: string, OTP: string }): any => a
         dispatch({ type: setAuthState, payload: { title: "candidate_data", value: null } });
         dispatch({ type: setAuthState, payload: { title: "admin_data", value: null } });
         localStorage.setItem('evoting-auth', JSON.stringify({ ...data?.data.token }));
+        localStorage.setItem('evoting-role', JSON.stringify(jwtDecode(data.data.token)));
     } catch (error: any) {
         console.log(error);
     }
@@ -41,6 +42,7 @@ export const candiateSignUp = (formData: CandidateSignUp): any => async (dispatc
         dispatch({ type: setAuthState, payload: { title: "voter_data", value: null } });
         dispatch({ type: setAuthState, payload: { title: "admin_data", value: null } });
         localStorage.setItem('evoting-auth', JSON.stringify({ ...data?.data.token }));
+        localStorage.setItem('evoting-role', JSON.stringify(jwtDecode(data.data.token)));
     } catch (error) {
         console.log(error);
     }
@@ -55,6 +57,7 @@ export const candiateSignIn = (formData: CandidateSignIn): any => async (dispatc
         dispatch({ type: setAuthState, payload: { title: "voter_data", value: null } });
         dispatch({ type: setAuthState, payload: { title: "admin_data", value: null } });
         localStorage.setItem('evoting-auth', JSON.stringify(data?.data.token));
+        localStorage.setItem('evoting-role', JSON.stringify(jwtDecode(data.data.token)));
     } catch (error) {
         console.log(error);
     }
@@ -68,6 +71,7 @@ export const adminLogIn = (formData: AdminLogIn): any => async (dispatch: any) =
         dispatch({ type: setAuthState, payload: { title: "admin_data", value: jwtDecode(data.token) } });
         dispatch({ type: setAuthState, payload: { title: "voter_data", value: null } });
         dispatch({ type: setAuthState, payload: { title: "candidate_data", value: null } });
+        localStorage.setItem('evoting-role', JSON.stringify(jwtDecode(data.token)));
         dispatch(getAllElection())
         localStorage.setItem('evoting-auth', JSON.stringify(data?.token));
     } catch (error) {
