@@ -85,18 +85,10 @@ export interface PartyData {
 
 
   export interface CandidateUpdateDto {
-    _id: string;
-    email: string;
-    username: string;
-    phone: string;
-    password: string;
-    voter_id: string;
     party_id: string;
     election_id: string;
     registered_constituency_id: string;
     assets: string[];
     has_crime_records: boolean;
     is_accused: boolean;
-    is_eligible: boolean;
-    is_registered: boolean;
 }

@@ -5,9 +5,10 @@ import { useDispatch } from 'react-redux';
 
 interface CandidateConfirmationProp {
     setIsDialogOpen: React.Dispatch<React.SetStateAction<any>>;
+    isRegistered: boolean
 }
 
-const CandidateConfirmation = ({ setIsDialogOpen }: CandidateConfirmationProp) => {
+const CandidateConfirmation = ({ setIsDialogOpen, isRegistered }: CandidateConfirmationProp) => {
     const { current_election, current_party } = useAppSelector(getElectionData);
 
     return (
@@ -44,7 +45,7 @@ const CandidateConfirmation = ({ setIsDialogOpen }: CandidateConfirmationProp) =
                             <span className="font-semibold">Election Country:</span> {current_election.constituency.country}
                         </p>
                     </div>
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded w-full" onClick={()=>setIsDialogOpen(true)} >Register</button>
+                    {!isRegistered && <button className="bg-blue-500 text-white px-4 py-2 rounded w-full" onClick={() => setIsDialogOpen(true)} >Register</button>}
                 </div>)
             }
         </div>

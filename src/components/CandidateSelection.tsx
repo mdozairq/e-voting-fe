@@ -8,7 +8,7 @@ import CandidateDetailsForm from './CandidateDetailsForm';
 import CandidateConfirmation from './CandidateConfirmation';
 import ConfirmationDialog from './ConfirmationDialog';
 import { useDispatch } from 'react-redux';
-import { updateClientById } from '@/action/election';
+import { getElectionById, getPartyById, updateCandidateById } from '@/action/election';
 
 enum Selection {
     Election,
@@ -20,7 +20,7 @@ enum Selection {
 
 const CandidateSelection = () => {
     const { current_election, current_party } = useAppSelector(getElectionData);
-    const { candidate_data,} = useAppSelector(getAuthData);
+    const { candidate_data } = useAppSelector(getAuthData);
     const [currentSelection, setCurrentSelection] = useState<Selection>(Selection.Election);
     const [disabledPhase, setDisabledPhase] = useState<boolean>(false);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -54,7 +54,6 @@ const CandidateSelection = () => {
 
         if (currentSelection === Selection.Submit) {
             setDisabledPhase(true)
-            // setCurrentSelection(Phase.Initialization)
         }
         else {
             if (current_election)
@@ -64,19 +63,33 @@ const CandidateSelection = () => {
 
     console.log("CAN:", candidate_data);
 
+    useEffect(() => {
+        if (candidate_data && candidate_data.is_registered) {
+            setCurrentSelection(Selection.Submit)
+        }
+
+        if (candidate_data && !current_election) {
+            dispatch(getElectionById(candidate_data.election_id))
+        }
+
+        if (candidate_data && !current_party) {
+            dispatch(getPartyById(candidate_data.party_id))
+        }
+    }, [candidate_data, current_election, current_party])
+
+console.log("formData", formData);
+
 
     const handleConfirm = () => {
         let candidate_payload = {
-            ...candidate_data,
-            _id: candidate_data.candidate_id,
             party_id: current_party._id,
             registered_constituency_id: current_election.constituency._id,
-            assets: (formData.assets && formData.assets.split(',')) || [],
+            assets: formData!?.assets,
             has_crime_records: formData.has_crime_records,
             is_accused: formData.is_accused,
             election_id: current_election._id
         }
-        dispatch(updateClientById(candidate_data.candidate_id, candidate_payload));
+        dispatch(updateCandidateById(candidate_data.candidate_id, candidate_payload));
 
         setIsDialogOpen(false);
     };
@@ -91,11 +104,11 @@ const CandidateSelection = () => {
                 onConfirm={handleConfirm}
             />
             <div className='text-center items-center text-2xl text-slate-950 mt-2'>
-                {
+                {candidate_data && !candidate_data.is_registered && (
                     currentSelection === Selection.Election ? "Select the Election" :
                         currentSelection === Selection.Party ? "Select A Party" :
                             currentSelection === Selection.Detail ? "Fill up the Details" :
-                                "Are you want to Submit?"
+                                "Are you want to Submit?")
                 }
                 <br />
                 <hr className='h-0 bg-black m-1' />
@@ -104,7 +117,7 @@ const CandidateSelection = () => {
                 {currentSelection === Selection.Election && <ElectionList />}
                 {currentSelection === Selection.Party && <PartyCard />}
                 {currentSelection === Selection.Detail && <CandidateDetailsForm formData={formData} setFormData={setFormData} />}
-                {currentSelection === Selection.Submit && <CandidateConfirmation setIsDialogOpen={setIsDialogOpen} />}
+                {currentSelection === Selection.Submit && <CandidateConfirmation setIsDialogOpen={setIsDialogOpen} isRegistered={candidate_data!?.is_registered}/>}
             </div>
             <div className='flex px-2 pb-2 justify-evenly '>
                 {(currentSelection === Selection.Party || currentSelection === Selection.Detail) ?

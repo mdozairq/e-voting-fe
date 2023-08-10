@@ -41,7 +41,7 @@ export const candiateSignUp = (formData: CandidateSignUp): any => async (dispatc
         dispatch({ type: setAuthState, payload: { title: "candidate_data", value: jwtDecode(data.data.token) } });
         dispatch({ type: setAuthState, payload: { title: "voter_data", value: null } });
         dispatch({ type: setAuthState, payload: { title: "admin_data", value: null } });
-        localStorage.setItem('evoting-auth', JSON.stringify({ ...data?.data.token }));
+        localStorage.setItem('evoting-auth', JSON.stringify(data?.data.token));
         localStorage.setItem('evoting-role', JSON.stringify(jwtDecode(data.data.token)));
     } catch (error) {
         console.log(error);
@@ -78,3 +78,14 @@ export const adminLogIn = (formData: AdminLogIn): any => async (dispatch: any) =
         console.log(error);
     }
 }
+
+
+export const getCandidateById = (id: string) => async (dispatch: any) => {
+    try {
+        const { data } = await api.getCandidateById(id)
+        console.log(data)
+        dispatch({ type: setAuthState, payload: { title: "candidate_data", value: data }});
+    } catch (error: any) {
+        console.log(error);
+    }
+};

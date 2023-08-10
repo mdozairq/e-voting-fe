@@ -1,6 +1,7 @@
 import *  as api from '@/api'
 import { AdminLogIn, CandidateSignIn, CandidateSignUp, CandidateUpdateDto, InitializeElectionDTO, Roles } from '@/lib/types';
 import { setElectionState } from '@/redux/slices/electionStateReducer';
+import { getCandidateById } from './auth';
 
 
 
@@ -66,12 +67,13 @@ export const getPartyById = (id: string): any => async (dispatch: any) => {
     }
 };
 
-export const updateClientById = (id: string, update_payload: CandidateUpdateDto): any => async (dispatch: any) => {
+export const updateCandidateById = (id: string, update_payload: CandidateUpdateDto): any => async (dispatch: any) => {
     try {
         const { data } = await api.updateCandidateById(id, update_payload)
         console.log(data)
-        dispatch({ type: setElectionState, payload: { title: "current_party", value: data } })
+        dispatch(getCandidateById(id))
     } catch (error: any) {
         console.log(error);
     }
 };
+

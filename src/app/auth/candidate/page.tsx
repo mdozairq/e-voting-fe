@@ -20,9 +20,9 @@ const CandidateAuth: React.FC = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [otp, setOtp] = useState(['', '', '', '']);
-    const [isEmailValid, setIsEmailValid] = useState(true);
-    const [isPasswordValid, setIsPasswordValid] = useState(true);
-    const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(true);
+    const [isEmailValid, setIsEmailValid] = useState(false);
+    const [isPasswordValid, setIsPasswordValid] = useState(false);
+    const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(false);
     const inputRefs = useRef<HTMLInputElement[]>([]);
     const router = useRouter()
     const dispatch = useDispatch();
@@ -33,7 +33,7 @@ const CandidateAuth: React.FC = () => {
         return emailRegex.test(email);
     };
 
-    const validatePassword = (password: string, confirmPassword: string) => {
+    const validatePassword = (password: string) => {
         const uppercaseRegex = /[A-Z]/;
         const lowercaseRegex = /[a-z]/;
         const digitRegex = /[0-9]/;
@@ -93,12 +93,14 @@ const CandidateAuth: React.FC = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        const isPasswordValid = validatePassword(password, confirmPassword);
+        const isPasswordValid = validatePassword(password);
         setIsPasswordValid(isPasswordValid)
         if (formType === FormType.Signup && isPasswordValid) {
             const isValid = validateEmail(email);
             setIsEmailValid(isValid);
             setIsConfirmPasswordValid(password === confirmPassword);
+            console.log("dd",isEmailValid, isConfirmPasswordValid);
+            
             if (isEmailValid && isConfirmPasswordValid) {
                 const formPayload: CandidateSignUp = {
                     username: username,
@@ -110,8 +112,8 @@ const CandidateAuth: React.FC = () => {
                 console.log('Signup form submitted');
                 clearFormFields();
             }
-        } else if (formType === FormType.Login && isEmailValid ) {
-            if (isPasswordValid && isEmailValid) {
+        } else if (formType === FormType.Login ) {
+            if (isPasswordValid ) {
                 const formPayload: CandidateSignIn = {
                     username: username,
                     password: password

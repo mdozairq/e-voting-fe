@@ -22,7 +22,7 @@ const CandidateInfoCard: React.FC = () => {
 
     return (
         candidate_data && (
-            <div className="bg-white rounded shadow-md p-4 md:p-6 mx-8 my-3">
+            <div className="bg-white rounded shadow-md p-4 md:p-6 mx-8 mt-4">
                 <h1 className="text-2xl font-bold mb-1">Candidate Details</h1>
                 <hr />
                 <br />
@@ -44,6 +44,14 @@ const CandidateInfoCard: React.FC = () => {
                         <p className="text-gray-500">Gender:</p>
                         <p>{candidate_data.gender}</p>
                     </div>
+                    {/* <div>
+                        <p className="text-gray-500">Email:</p>
+                        <p>{candidate_data.phone}</p>
+                    </div>
+                    <div>
+                        <p className="text-gray-500">Gender:</p>
+                        <p>{candidate_data.gender}</p>
+                    </div> */}
                 </div>
             </div>
         )
