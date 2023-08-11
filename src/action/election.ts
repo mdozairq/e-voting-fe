@@ -47,9 +47,9 @@ export const getRegistrationElection = (): any => async (dispatch: any) => {
     }
 };
 
-export const getPartyList = (): any => async (dispatch: any) => {
+export const getPartyList = (query: string): any => async (dispatch: any) => {
     try {
-        const { data } = await api.getPartyList()
+        const { data } = await api.getPartyList(query)
         console.log(data)
         dispatch({ type: setElectionState, payload: { title: "party_list", value: data } })
     } catch (error: any) {

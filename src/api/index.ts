@@ -60,7 +60,7 @@ export const getAllElection = () => api.get('/admin/election/all');
 export const getElectionById = (id: string) => api.get(`/admin/election/${id}`);
 export const initializeElection = (payload: InitializeElectionDTO) => api.post(`admin/election/initialize`, payload)
 export const registrationElection = () => api.get('/candidate/election')
-export const getPartyList = () => api.get('/candidate/party/all')
+export const getPartyList = (query: string) => api.get(`/candidate/party/all?electionId=${query}`);
 export const getPartyById = (id: string) => api.get(`/candidate/party/${id}`)
 export const updateCandidateById = (id: string, update_payload: CandidateUpdateDto) => api.patch(`/candidate/${id}`, update_payload)
 export const getCandidateById = (id: string) => api.get(`/candidate/${id}`)

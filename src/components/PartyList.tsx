@@ -23,13 +23,13 @@ interface PartyCardProps {
 }
 
 const PartyCard: React.FC = () => {
-    const { party_list } = useAppSelector(getElectionData);
+    const { party_list, current_election } = useAppSelector(getElectionData);
     const [selectedParty, setSelectedParty] = useState<string|null|undefined>(null)
     const dispatch = useDispatch();
 
     useEffect(() => {
         if (!party_list) {
-            dispatch(getPartyList());
+            dispatch(getPartyList(current_election._id));
         }
     }, [party_list]);
 

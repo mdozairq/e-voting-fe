@@ -14,7 +14,7 @@ const CandidateDetailsForm: React.FC<CandidateInfoProps> = ({formData, setFormDa
     useEffect(() => {
         if (candidate_data) {
             setFormData({
-                assets: candidate_data.assets || [], 
+                assets: candidate_data.assets || "", 
                 has_crime_records: candidate_data.has_crime_records,
                 is_accused: candidate_data.is_accused
             });
