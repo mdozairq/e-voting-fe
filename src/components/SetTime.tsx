@@ -26,13 +26,6 @@ const SetTime: React.FC<ConfirmationDialogProps> = ({
 }) => {
     const { current_election } = useAppSelector(getElectionData);
     if (!isOpen) return null;
-    const dispatch = useDispatch();
-    
-
-    // const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        
-    // };
-
 
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
