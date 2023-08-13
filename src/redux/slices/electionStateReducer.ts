@@ -11,7 +11,8 @@ interface authStateType {
     all_election: any,
     current_election: any,
     party_list: any,
-    current_party: any
+    current_party: any,
+    all_constituency: any
 }
 
 const initialState: authStateType = {
@@ -23,7 +24,8 @@ const initialState: authStateType = {
     all_election: null,
     current_election: null,
     party_list: null,
-    current_party: null
+    current_party: null,
+    all_constituency: []
 };
 
 export const electionSlice = createSlice({

@@ -7,8 +7,9 @@ const Timer: React.FC<{ endTime: string }> = ({ endTime }) => {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            const now = moment.tz(moment(), 'Asia/Kolkata'); // Get the current time in Indian time zone
-            const end = moment.tz(endTime, 'Asia/Kolkata'); // Parse the provided end time in Indian time zone
+            const now = moment.tz('Asia/Kolkata'); // Get the current time in Indian time zone
+            const end = moment(endTime, 'YYYY-MM-DDTHH:mm:ss'); // Parse the provided end time without time zone conversion
+
             const timeRemaining = end.diff(now);
 
             if (timeRemaining <= 0) {
@@ -26,6 +27,7 @@ const Timer: React.FC<{ endTime: string }> = ({ endTime }) => {
 
     const formatTime = (milliseconds: number): string => {
         const duration = moment.duration(milliseconds);
+
         const hours = duration.hours();
         const minutes = duration.minutes();
         const seconds = duration.seconds();

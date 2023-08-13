@@ -5,7 +5,7 @@ import { useAppSelector } from '@/redux/hooks';
 import { getElectionData } from '@/redux/selectors/app';
 import { phase_mapping } from '@/lib/helpers';
 import { useDispatch } from 'react-redux';
-import { initializeElection, updateELectionPhase } from '@/action/election';
+import { getAllConstituency, initializeElection, updateELectionPhase } from '@/action/election';
 import { ElectionPhase, InitializeElectionDTO, UpdateElectionDto } from '@/lib/types';
 import SetTime from './SetTime';
 
@@ -15,38 +15,11 @@ interface ElectionDetailProps {
 
 const ElectionDetail: React.FC = () => {
   const electionTypes = ['GENERAL', 'STATE', 'MUNICIPAL', 'PANCHAYAT'];
-  const { current_election } = useAppSelector(getElectionData);
+  const { current_election, all_constituency } = useAppSelector(getElectionData);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  console.log(current_election);
-
-  const [constituency, setConstituency] = useState({
-    _id: '',
-    state: '',
-    country: '',
-    pincode: ''
-  })
+  const [constituency, setConstituency] = useState<any>(null)
   const dispatch = useDispatch()
 
-  // Sample data for constituencies
-  const constituencies = [
-    {
-      "_id": "64cb2f3f864aa2aed2a864b8",
-      "city": "Gaya",
-      "district": "Gaya",
-      "state": "Bihar",
-      "country": "India",
-      "pincode": "823001"
-    },
-    {
-      "_id": "64cb2f99864aa2aed2a864bb",
-      "city": "Muzzafarpur",
-      "district": "Muzzafarpur",
-      "state": "Bihar",
-      "country": "India",
-      "pincode": "842002"
-    },
-    // Add more constituencies as needed
-  ];
 
   const [formData, setFormData] = useState({
     election_name: '',
@@ -74,8 +47,21 @@ const ElectionDetail: React.FC = () => {
   };
 
   useEffect(() => {
+    if (!all_constituency.length) {
+      dispatch(getAllConstituency())
+    }
+  }, [all_constituency]);
+
+  useEffect(() => {
     if (formData.constituency) {
-      let current_constituency: any = constituencies.find((ele) => formData.constituency === ele._id ? ele : {});
+      let current_constituency: any = all_constituency.length && all_constituency.find((ele: any) => {
+        if (formData.constituency === ele._id) {
+          return ele
+        }
+        else {
+          return null
+        }
+      });
       setConstituency(current_constituency)
     }
 
@@ -113,14 +99,14 @@ const ElectionDetail: React.FC = () => {
     <>
       <SetTime
         isOpen={isDialogOpen}
-        title="Confirmation"
+        title="You are proceeding to Next Phase"
         message="Are you sure you want to proceed?"
         onCancel={handleCloseDialog}
         onConfirm={handleConfirm} timeData={timeData}
         setTimeData={setTimeData} />
       <div className="max-w-lg w-full mx-auto items-center">
         <div className="bg-white p-8 rounded shadow-md m-8">
-          {current_election && current_election ? (
+          {current_election && current_election.election_phase === ElectionPhase.INITIALIZATION ? (
             <>
               <h1 className="text-2xl font-bold mb-1">Election Details</h1>
               <hr />
@@ -150,7 +136,15 @@ const ElectionDetail: React.FC = () => {
                 <span className="font-semibold">Election Country:</span> {current_election.constituency.country}
               </p>
             </>
-          ) : (
+          ) : current_election && current_election.election_phase === ElectionPhase.REGISTRATION ? (<>
+            REGISTRATION PHASE
+          </>) : current_election && current_election.election_phase === ElectionPhase.VOTING ? (<>
+            VOTING PHASE
+          </>) : current_election && current_election.election_phase === ElectionPhase.RESULT ? (<>
+            RESULT PHASE
+          </>) : current_election && current_election.election_phase === ElectionPhase.DECLARED ? (<>
+           RESULT has been Declared, Election Successfully Conducted!
+          </>) : (
             <>
               <h1 className="text-2xl font-bold mb-1">Election Initialize</h1>
               <hr />
@@ -281,7 +275,7 @@ const ElectionDetail: React.FC = () => {
                     onChange={(e) => setFormData({ ...formData, constituency: e.target.value })}
                   >
                     <option value="">Select District</option>
-                    {constituencies.map((district) => (
+                    {all_constituency && all_constituency.map((district: any) => (
                       <option key={district._id} value={district._id}>
                         {district.district}
                       </option>
@@ -337,7 +331,7 @@ const ElectionDetail: React.FC = () => {
             </>
           )}
         </div>
-        {current_election &&  current_election.election_phase !== ElectionPhase.DECLARED && <button className="bg-blue-500 text-white px-4 py-2 rounded w-full" onClick={() => setIsDialogOpen(true)}>Next Phase</button>}
+        {current_election && current_election.election_phase !== ElectionPhase.DECLARED && <button className="bg-blue-500 text-white px-4 py-2 rounded w-full" onClick={() => setIsDialogOpen(true)}>Next Phase</button>}
       </div>
     </>
   );

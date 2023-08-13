@@ -3,7 +3,7 @@ import { AdminLogIn, CandidateSignIn, CandidateSignUp, Roles } from '@/lib/types
 import { setAppState } from '@/redux/slices/appStateReducer';
 import { setAuthState } from '@/redux/slices/authReducter';
 import jwtDecode from 'jwt-decode';
-import { getAllElection } from './election';
+import { getAllConstituency, getAllElection } from './election';
 import { getElectionByAadhaar } from './voter';
 
 
@@ -80,6 +80,7 @@ export const adminLogIn = (formData: AdminLogIn): any => async (dispatch: any) =
         dispatch({ type: setAuthState, payload: { title: "candidate_data", value: null } });
         localStorage.setItem('evoting-role', JSON.stringify(jwtDecode(data.token)));
         dispatch(getAllElection())
+        dispatch(getAllConstituency())
         localStorage.setItem('evoting-auth', JSON.stringify(data?.token));
     } catch (error: any) {
         dispatch({ type: setAppState, payload: { title: "global_error", value: (error && error?.response.data.error) || "Something Went Wrong" } });

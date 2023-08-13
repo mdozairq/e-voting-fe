@@ -89,3 +89,13 @@ export const updateELectionPhase = (id: string, update_payload: UpdateElectionDt
         console.log(error);
     }
 };
+
+export const getAllConstituency = (): any => async (dispatch: any) => {
+    try {
+        const { data } = await api.getAllConstituency()
+        dispatch({ type: setElectionState, payload: { title: "all_constituency", value: data } })
+    } catch (error: any) {
+        dispatch({ type: setAppState, payload: { title: "global_error", value:  (error && error?.response?.data.error) || "Something Went Wrong" } });
+        console.log(error);
+    }
+};
