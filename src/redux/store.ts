@@ -9,11 +9,15 @@ import storage from 'redux-persist/lib/storage';
 import { appSlice } from './slices/appStateReducer';
 import { authSlice } from './slices/authReducter';
 import { electionSlice } from './slices/electionStateReducer';
+import { voterSlice } from './slices/voterStateReducer';
+import { adminSlice } from './slices/adminStateReducer';
 
 const rootReducer = combineReducers({
   [appSlice.name]: appSlice.reducer,
   [authSlice.name]: authSlice.reducer,
-  [electionSlice.name]: electionSlice.reducer
+  [electionSlice.name]: electionSlice.reducer,
+  [voterSlice.name]: voterSlice.reducer,
+  [adminSlice.name]: adminSlice.reducer
 });
 
 const makeConfiguredStore = () =>

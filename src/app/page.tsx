@@ -1,4 +1,5 @@
 import { Hero } from '@/components'
+import ErrorNotification from '@/components/CustomError'
 
 function Home() {
   return (

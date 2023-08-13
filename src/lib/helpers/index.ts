@@ -5,7 +5,8 @@ export const phase_mapping = (phase: ElectionPhase): number => {
         INITIALIZATION: 0,
         REGISTRATION: 1,
         VOTING: 2,
-        RESULT: 3
+        RESULT: 3,
+        DECLARED: 4
     }
 
     return def_phase[phase]

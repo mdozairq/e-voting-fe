@@ -5,8 +5,9 @@ import { useAppSelector } from '@/redux/hooks';
 import { getElectionData } from '@/redux/selectors/app';
 import { phase_mapping } from '@/lib/helpers';
 import { useDispatch } from 'react-redux';
-import { initializeElection } from '@/action/election';
-import { InitializeElectionDTO } from '@/lib/types';
+import { initializeElection, updateELectionPhase } from '@/action/election';
+import { ElectionPhase, InitializeElectionDTO, UpdateElectionDto } from '@/lib/types';
+import SetTime from './SetTime';
 
 interface ElectionDetailProps {
   data: any;
@@ -15,6 +16,7 @@ interface ElectionDetailProps {
 const ElectionDetail: React.FC = () => {
   const electionTypes = ['GENERAL', 'STATE', 'MUNICIPAL', 'PANCHAYAT'];
   const { current_election } = useAppSelector(getElectionData);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   console.log(current_election);
 
   const [constituency, setConstituency] = useState({
@@ -53,12 +55,23 @@ const ElectionDetail: React.FC = () => {
     constituency: '',
     start_date: '',
     end_date: '',
-    start_time:'',
-    end_time:'',
+    start_time: '',
+    end_time: '',
     election_year: '',
     is_active: true,
     is_bypoll: false,
   });
+
+  const [timeData, setTimeData] = useState({
+    start_date: '',
+    end_date: '',
+    start_time: '',
+    end_time: '',
+  });
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+  };
 
   useEffect(() => {
     if (formData.constituency) {
@@ -82,7 +95,29 @@ const ElectionDetail: React.FC = () => {
     console.log(formData);
   };
 
+  const handleConfirm = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    // Dispatch the form data using Redux here
+    if (timeData.start_date !== '' && timeData.end_date !== '' && timeData.start_time !== '' && timeData.start_time !== "") {
+      const form_payload = {
+        start_date: new Date(`${timeData.start_date}T${timeData.start_time}:00Z`).toISOString(),
+        end_date: new Date(`${timeData.end_date}T${timeData.end_time}:00Z`).toISOString(),
+      }
+      dispatch(updateELectionPhase(current_election._id, form_payload as UpdateElectionDto))
+    }
+    console.log(timeData);
+    setIsDialogOpen(false);
+  }
+
   return (
+    <>
+      <SetTime
+        isOpen={isDialogOpen}
+        title="Confirmation"
+        message="Are you sure you want to proceed?"
+        onCancel={handleCloseDialog}
+        onConfirm={handleConfirm} timeData={timeData}
+        setTimeData={setTimeData} />
       <div className="max-w-lg w-full mx-auto items-center">
         <div className="bg-white p-8 rounded shadow-md m-8">
           {current_election && current_election ? (
@@ -114,7 +149,6 @@ const ElectionDetail: React.FC = () => {
               <p className="mb-4">
                 <span className="font-semibold">Election Country:</span> {current_election.constituency.country}
               </p>
-              <button className="bg-blue-500 text-white px-4 py-2 rounded w-full">Next Phase</button>
             </>
           ) : (
             <>
@@ -303,7 +337,9 @@ const ElectionDetail: React.FC = () => {
             </>
           )}
         </div>
+        {current_election &&  current_election.election_phase !== ElectionPhase.DECLARED && <button className="bg-blue-500 text-white px-4 py-2 rounded w-full" onClick={() => setIsDialogOpen(true)}>Next Phase</button>}
       </div>
+    </>
   );
 };
 

@@ -10,7 +10,6 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 const AdminAuth: React.FC = () => {
-  const { global_loader, global_error } = useAppSelector(getAppData);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);

@@ -3,6 +3,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Footer } from '@/components'
 import { ReduxProvider } from '@/redux/provider'
+import ErrorNotification from '@/components/CustomError'
 
 
 export const metadata: Metadata = {
@@ -20,6 +21,7 @@ export default function RootLayout({
       <body className={"relative"}>
         <ReduxProvider>
           <Navbar />
+          <ErrorNotification/>
           {children}
           <Footer />
         </ReduxProvider>

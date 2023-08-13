@@ -80,7 +80,7 @@ const VoterAuth = () => {
                 <div className="flex-1 padding-x">
                     <div className="flex justify-center items-center h-screen">
                         <div className="bg-white shadow-md rounded px-8 py-6 w-96">
-                            <h2 className="text-2xl font-bold mb-6">{isOtpSent ? 'Verify OTP' : 'Enter Aadhaar Number'}</h2>
+                            <h2 className="text-2xl font-bold mb-6">{is_otp_sent ? 'Verify OTP' : 'Enter Aadhaar Number'}</h2>
                             {is_otp_sent ? (
                                 <form onSubmit={handleOtpSubmit}>
                                     <div className="mb-4">

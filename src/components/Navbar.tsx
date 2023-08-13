@@ -5,14 +5,17 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { Roles } from '@/lib/types'
 import { resetAppState, setAppState } from '@/redux/slices/appStateReducer'
 import RouterButton from './RouterButton'
-import { getAppData } from '@/redux/selectors/app'
+import { getAppData, getVoterData } from '@/redux/selectors/app'
 import CustomButton from './CustomButton'
 import { resetAuthState } from '@/redux/slices/authReducter'
 import { resetElectionState } from '@/redux/slices/electionStateReducer'
+import Timer from './Timer'
 
 const Navbar = () => {
   const dispatch = useAppDispatch()
   const { current_role } = useAppSelector(getAppData)
+  const { voter_election } = useAppSelector(getVoterData);
+
 
   const handleClick = () => {
     localStorage.removeItem('evoting-auth')
@@ -28,13 +31,20 @@ const Navbar = () => {
       <nav className='max-w-[1440px] mx-auto flex justify-between items-center
       sm:px-16 px-6 py-4'>
         <Link href='/' className='flex justify-center items-center no-underline'><h2 className='text-black-500 font-bold text-lg'>E-Voting System</h2></Link>
-        {current_role !== Roles.GUEST &&
-          <CustomButton
-            title="Logout"
-            containerStyle="bg-red-500 text-white p-1 mt-4 rounded cursor-pointer"
-            handleClick={handleClick}
-          />
-        }
+        <div className='flex flex-row align-middle justify-center'>
+          <div className='sm:px-16 px-6 py-4'>
+            {current_role === Roles.VOTER && voter_election && voter_election.election && <Timer endTime={voter_election && voter_election.election.end_date} />}
+          </div>
+          <div>
+            {current_role !== Roles.GUEST &&
+              <CustomButton
+                title="Logout"
+                containerStyle="bg-red-500 text-white p-1 mt-4 rounded cursor-pointer"
+                handleClick={handleClick}
+              />
+            }
+          </div>
+        </div>
       </nav>
     </header>
   )

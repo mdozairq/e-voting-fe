@@ -50,7 +50,8 @@ export enum ElectionPhase {
     INITIALIZATION = 'INITIALIZATION',
     REGISTRATION = 'REGISTRATION',
     VOTING = 'VOTING',
-    RESULT = 'RESULT'
+    RESULT = 'RESULT',
+    DECLARED = 'DECLARED',
 }
 
 export enum ElectionType {
@@ -81,14 +82,19 @@ export interface PartyData {
     is_disqualified: boolean;
     created_at: string;
     updated_at: string;
-  }
+}
 
 
-  export interface CandidateUpdateDto {
+export interface CandidateUpdateDto {
     party_id: string;
     election_id: string;
     registered_constituency_id: string;
     assets: string[];
     has_crime_records: boolean;
     is_accused: boolean;
+}
+
+export interface UpdateElectionDto {
+    start_date: Date | '',
+    end_date: Date | '',
 }
