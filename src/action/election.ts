@@ -12,7 +12,7 @@ export const getAllElection = (): any => async (dispatch: any) => {
         const { data } = await api.getAllElection();
         dispatch({ type: setElectionState, payload: { title: "all_election", value: data } })
     } catch (error: any) {
-        dispatch({ type: setAppState, payload: { title: "global_error", value:  (error && error?.response?.data.error) || "Something Went Wrong" } });
+        dispatch({ type: setAppState, payload: { title: "global_error", value: (error && error?.response?.data.error) || "Something Went Wrong" } });
         console.log(error);
     }
 };
@@ -22,7 +22,7 @@ export const getElectionById = (id: string): any => async (dispatch: any) => {
         const { data } = await api.getElectionById(id);
         dispatch({ type: setElectionState, payload: { title: "current_election", value: data } })
     } catch (error: any) {
-        dispatch({ type: setAppState, payload: { title: "global_error", value:  (error && error?.response?.data.error) || "Something Went Wrong" } });
+        dispatch({ type: setAppState, payload: { title: "global_error", value: (error && error?.response?.data.error) || "Something Went Wrong" } });
         console.log(error);
     }
 };
@@ -32,8 +32,9 @@ export const initializeElection = (formData: InitializeElectionDTO): any => asyn
         const { data } = await api.initializeElection(formData);
         // dispatch({ type: setElectionState, payload: { title: "current_election", value: data.data } })
         dispatch(getElectionById(data.data._id));
+        dispatch(getAllElection());
     } catch (error: any) {
-        dispatch({ type: setAppState, payload: { title: "global_error", value:  (error && error?.response?.data.error) || "Something Went Wrong" } });
+        dispatch({ type: setAppState, payload: { title: "global_error", value: (error && error?.response?.data.error) || "Something Went Wrong" } });
         console.log(error);
     }
 };
@@ -43,7 +44,7 @@ export const getRegistrationElection = (): any => async (dispatch: any) => {
         const { data } = await api.registrationElection()
         dispatch({ type: setElectionState, payload: { title: "all_election", value: data } })
     } catch (error: any) {
-        dispatch({ type: setAppState, payload: { title: "global_error", value:  (error && error?.response?.data.error) || "Something Went Wrong" } });
+        dispatch({ type: setAppState, payload: { title: "global_error", value: (error && error?.response?.data.error) || "Something Went Wrong" } });
         console.log(error);
     }
 };
@@ -54,7 +55,7 @@ export const getPartyList = (query: string): any => async (dispatch: any) => {
         console.log(data)
         dispatch({ type: setElectionState, payload: { title: "party_list", value: data } })
     } catch (error: any) {
-        dispatch({ type: setAppState, payload: { title: "global_error", value:  (error && error?.response?.data.error) || "Something Went Wrong" } });
+        dispatch({ type: setAppState, payload: { title: "global_error", value: (error && error?.response?.data.error) || "Something Went Wrong" } });
         console.log(error);
     }
 };
@@ -64,7 +65,7 @@ export const getPartyById = (id: string): any => async (dispatch: any) => {
         const { data } = await api.getPartyById(id)
         dispatch({ type: setElectionState, payload: { title: "current_party", value: data } })
     } catch (error: any) {
-        dispatch({ type: setAppState, payload: { title: "global_error", value:  (error && error?.response?.data.error) || "Something Went Wrong" } });
+        dispatch({ type: setAppState, payload: { title: "global_error", value: (error && error?.response?.data.error) || "Something Went Wrong" } });
         console.log(error);
     }
 };
@@ -74,7 +75,7 @@ export const updateCandidateById = (id: string, update_payload: CandidateUpdateD
         const { data } = await api.updateCandidateById(id, update_payload)
         dispatch(getCandidateById(id))
     } catch (error: any) {
-        dispatch({ type: setAppState, payload: { title: "global_error", value:  (error && error?.response?.data.error) || "Something Went Wrong" } });
+        dispatch({ type: setAppState, payload: { title: "global_error", value: (error && error?.response?.data.error) || "Something Went Wrong" } });
         console.log(error);
     }
 };
@@ -85,7 +86,7 @@ export const updateELectionPhase = (id: string, update_payload: UpdateElectionDt
         const { data } = await api.updateELectionPhase(id, update_payload)
         dispatch(getElectionById(id))
     } catch (error: any) {
-        dispatch({ type: setAppState, payload: { title: "global_error", value:  (error && error?.response?.data.error) || "Something Went Wrong" } });
+        dispatch({ type: setAppState, payload: { title: "global_error", value: (error && error?.response?.data.error) || "Something Went Wrong" } });
         console.log(error);
     }
 };
@@ -95,7 +96,18 @@ export const getAllConstituency = (): any => async (dispatch: any) => {
         const { data } = await api.getAllConstituency()
         dispatch({ type: setElectionState, payload: { title: "all_constituency", value: data } })
     } catch (error: any) {
-        dispatch({ type: setAppState, payload: { title: "global_error", value:  (error && error?.response?.data.error) || "Something Went Wrong" } });
+        dispatch({ type: setAppState, payload: { title: "global_error", value: (error && error?.response?.data.error) || "Something Went Wrong" } });
+        console.log(error);
+    }
+};
+
+
+export const getCandidateByElection = (id: string): any => async (dispatch: any) => {
+    try {
+        const { data } = await api.getCandidateByElection(id)
+        dispatch({ type: setElectionState, payload: { title: "election_candidate", value: data || [] } })
+    } catch (error: any) {
+        dispatch({ type: setAppState, payload: { title: "global_error", value: (error && error?.response?.data.error) || "Something Went Wrong" } });
         console.log(error);
     }
 };

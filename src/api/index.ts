@@ -67,3 +67,4 @@ export const getCandidateById = (id: string) => api.get(`/candidate/${id}`)
 export const getElectionByAadhaar = (adhaar: string) => api.get(`/voters/election?adhaarNumber=${adhaar}`)
 export const updateELectionPhase = (id: string, update_payload: UpdateElectionDto) => api.patch(`/admin/election/${id}`, update_payload);
 export const getAllConstituency = () => api.get(`/admin/constituency/all`)
+export const getCandidateByElection = (query: string) => api.get(`/admin/candidate?electionId=${query}`)

@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { getAllConstituency, initializeElection, updateELectionPhase } from '@/action/election';
 import { ElectionPhase, InitializeElectionDTO, UpdateElectionDto } from '@/lib/types';
 import SetTime from './SetTime';
+import CandidateTable from './CandidateTable';
 
 interface ElectionDetailProps {
   data: any;
@@ -104,8 +105,8 @@ const ElectionDetail: React.FC = () => {
         onCancel={handleCloseDialog}
         onConfirm={handleConfirm} timeData={timeData}
         setTimeData={setTimeData} />
-      <div className="max-w-lg w-full mx-auto items-center">
-        <div className="bg-white p-8 rounded shadow-md m-8">
+      <div className="w-full mx-auto items-center">
+        <div className="bg-white p-8 rounded shadow-md m-4">
           {current_election && current_election.election_phase === ElectionPhase.INITIALIZATION ? (
             <>
               <h1 className="text-2xl font-bold mb-1">Election Details</h1>
@@ -137,13 +138,13 @@ const ElectionDetail: React.FC = () => {
               </p>
             </>
           ) : current_election && current_election.election_phase === ElectionPhase.REGISTRATION ? (<>
-            REGISTRATION PHASE
+            <CandidateTable />
           </>) : current_election && current_election.election_phase === ElectionPhase.VOTING ? (<>
             VOTING PHASE
           </>) : current_election && current_election.election_phase === ElectionPhase.RESULT ? (<>
             RESULT PHASE
           </>) : current_election && current_election.election_phase === ElectionPhase.DECLARED ? (<>
-           RESULT has been Declared, Election Successfully Conducted!
+            RESULT has been Declared, Election Successfully Conducted!
           </>) : (
             <>
               <h1 className="text-2xl font-bold mb-1">Election Initialize</h1>
@@ -330,8 +331,11 @@ const ElectionDetail: React.FC = () => {
               </form>
             </>
           )}
+        </div >
+        <div className='w-auto m-4'>
+          {current_election && current_election.election_phase !== ElectionPhase.DECLARED && <button className="bg-blue-500 text-white py-2 rounded px-2 w-full" onClick={() => setIsDialogOpen(true)}>Next Phase</button>}
         </div>
-        {current_election && current_election.election_phase !== ElectionPhase.DECLARED && <button className="bg-blue-500 text-white px-4 py-2 rounded w-full" onClick={() => setIsDialogOpen(true)}>Next Phase</button>}
+
       </div>
     </>
   );
