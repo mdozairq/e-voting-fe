@@ -10,6 +10,7 @@ import CustomButton from './CustomButton'
 import { resetAuthState } from '@/redux/slices/authReducter'
 import { resetElectionState } from '@/redux/slices/electionStateReducer'
 import Timer from './Timer'
+import { resetVoterState } from '@/redux/slices/voterStateReducer'
 
 const Navbar = () => {
   const dispatch = useAppDispatch()
@@ -25,6 +26,7 @@ const Navbar = () => {
     dispatch(resetAppState())
     dispatch(resetAuthState())
     dispatch(resetElectionState())
+    dispatch(resetVoterState())
   }
 
   return (

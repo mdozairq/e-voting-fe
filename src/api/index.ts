@@ -1,4 +1,4 @@
-import { AdminLogIn, CandidateSignIn, CandidateSignUp, CandidateUpdateDto, InitializeElectionDTO, UpdateElectionDto } from '@/lib/types';
+import { AdminLogIn, CandidateSignIn, CandidateSignUp, CandidateUpdateDto, InitializeElectionDTO, UpdateElectionDto, VotingBallot } from '@/lib/types';
 import { setAppState } from '@/redux/slices/appStateReducer';
 import { store } from '@/redux/store';
 import axios from 'axios';
@@ -68,3 +68,5 @@ export const getElectionByAadhaar = (adhaar: string) => api.get(`/voters/electio
 export const updateELectionPhase = (id: string, update_payload: UpdateElectionDto) => api.patch(`/admin/election/${id}`, update_payload);
 export const getAllConstituency = () => api.get(`/admin/constituency/all`)
 export const getCandidateByElection = (query: string) => api.get(`/admin/candidate?electionId=${query}`)
+export const voteBallot = (payload: VotingBallot) => api.post(`/voters/election/vote`, payload)
+export const getVoterById = (id: string) => api.get(`/voters/${id}`)

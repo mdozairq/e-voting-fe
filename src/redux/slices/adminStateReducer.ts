@@ -20,7 +20,10 @@ export const adminSlice = createSlice({
             } = action;
 
             state[title] = value;
-        }
+        },
+        resetVoterState: (state: any) => {
+            return initialState; // Reset to initial state
+        },
     },
 });
 

@@ -22,12 +22,16 @@ export const voterSlice = createSlice({
             } = action;
 
             state[title] = value;
-        }
+        },
+        resetVoterState: (state: any) => {
+            return initialState; 
+        },
     },
 });
 
 export const {
-    setVoterState
+    setVoterState,
+    resetVoterState
 } = voterSlice.actions;
 
 export default voterSlice.reducer;

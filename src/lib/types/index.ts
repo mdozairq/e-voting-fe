@@ -98,3 +98,10 @@ export interface UpdateElectionDto {
     start_date: Date | '',
     end_date: Date | '',
 }
+
+export interface VotingBallot {
+    voter_id: string,
+    candidate_id: string,
+    party_id: string,
+    election_id: string,
+}
